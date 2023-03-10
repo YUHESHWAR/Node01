@@ -116,7 +116,7 @@ const data = [
   },
 ];
 
-const PORT = 4000;
+const PORT = process.env.PORT;
 
 // const mongoUrl = "mongodb://localhost:27017/";
 const client = new MongoClient(process.env.MongoUrl);
