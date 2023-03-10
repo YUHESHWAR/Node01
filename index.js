@@ -1,4 +1,4 @@
-import express from "express";
+import express, { request, response } from "express";
 import { MongoClient } from "mongodb";
 import * as dotenv from "dotenv";
 dotenv.config();
@@ -120,6 +120,11 @@ const PORT = process.env.PORT;
 
 // const mongoUrl = "mongodb://localhost:27017/";
 const client = new MongoClient(process.env.MongoUrl);
+
+app.get("/", (request, response) => {
+  response.send("<h1>🙋🏻‍♂️ 🌍</h1>");
+});
+
 app.get("/movies", async (request, response) => {
   await client.connect();
   console.log("Client connection Successfull");
