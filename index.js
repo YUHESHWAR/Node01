@@ -120,7 +120,9 @@ const PORT = process.env.PORT;
 
 // const mongoUrl = "mongodb://localhost:27017/";
 const client = new MongoClient(process.env.MongoUrl);
-
+await client.connect();
+console.log("Client connection Successfull");
+client.close();
 app.get("/", (request, response) => {
   response.send("<h1>🙋🏻‍♂️ 🌍</h1>");
 });
