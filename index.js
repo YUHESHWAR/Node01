@@ -1,9 +1,12 @@
 import express, { request, response } from "express";
 import { MongoClient } from "mongodb";
+import cors from "cors";
 import * as dotenv from "dotenv";
+
 dotenv.config();
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 const data = [
   {
@@ -179,6 +182,26 @@ app.put("/update/:id", async (request, response) => {
     .collection("movies")
     .updateOne({ id: id }, { $set: updateData });
   response.send(movies);
+  client.close();
+});
+
+// MOBILES
+
+app.post("/add-mobiles", async (request, response) => {
+  await client.connect();
+  console.log("Client connection Successfull");
+  const data = request.body;
+  const db = await client.db("guvi");
+  const result = await db.collection("mobiles").insertMany(data);
+  response.status(201).send(result);
+  client.close();
+});
+
+app.get("/mobiles", async (request, response) => {
+  await client.connect();
+  const db = await client.db("guvi");
+  const data = await db.collection("mobiles").find().toArray();
+  response.status(200).send(data);
   client.close();
 });
 
